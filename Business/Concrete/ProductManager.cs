@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,7 +23,7 @@ namespace Business.Concrete
         public IResult Add(Product product)
         {
             _productDal.Add(product);
-            return new SuccessResult("eklendi");
+            return new SuccessResult(Messages.ProductAdded);
 
         }
 
@@ -51,7 +52,7 @@ namespace Business.Concrete
         public IResult Update(Product product)
         {
             _productDal.Update(product);
-            return new SuccessResult("güncellendi");
+            return new SuccessResult(Messages.ProductUpdated);
         }
     }
 }
