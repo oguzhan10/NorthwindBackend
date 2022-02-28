@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,9 +21,11 @@ namespace Business.Concrete
         {
             _productDal = productDal;
         }
-
+       // [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
+            ValidationTool.Validate(new ProductValidator(), product);
+
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
 
