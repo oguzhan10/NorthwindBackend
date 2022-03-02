@@ -21,5 +21,7 @@ namespace Business.constants
         public static string UserRegistered = "Kullanıcı başarılı ile kaydedildi";
 
         public static string AccessTokenCreated = "Accesstoken created";
+
+        
     }
 }
