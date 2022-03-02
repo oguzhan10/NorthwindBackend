@@ -1,3 +1,5 @@
+using Core.DependencyResolvers;
+using Core.Extensions;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,6 +29,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowOrigin",
@@ -49,6 +52,11 @@ namespace WebAPI
                     IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                 };
             });
+
+
+            services.AddDependencyResolvers(new Core.Utilities.IoC.ICoreModule[] {
+                new CoreModule()
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,8 +73,6 @@ namespace WebAPI
                 app.UseHsts();
             }
 
-
-
             //buradan gelen her talebe izin ver
             app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyHeader());
 
@@ -80,13 +86,13 @@ namespace WebAPI
 
             app.UseAuthorization();
 
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers(); //Routes for my API controllers
 
             });
+
 
 
         }
